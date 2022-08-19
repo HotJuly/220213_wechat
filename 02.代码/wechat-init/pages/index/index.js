@@ -3,16 +3,24 @@ Page({
 
   /**
    * 页面的初始数据
+   * 乞丐版深拷贝:JSON
+   *  var data= new Date();
+   *  JSON.parse(JSON.stringify(data));
+   * 缺点:
+   *  1.拷贝得到的结果一定是一个Object对象,会丢失原型链
+   *  2.如果属性值是undefined,那么拷贝结束,该属性会消失
+   *  3.如果属性值是函数,那么拷贝结束,该属性会变为undefined
+   *  4.遇到特殊类型凉凉,例如:Set,Map,这些都会变成数组和对象
    */
   data: {
-
+    msg:"我是初始化数据"
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(1,this.data.msg)
   },
 
   /**
