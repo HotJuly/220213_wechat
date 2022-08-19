@@ -1,19 +1,18 @@
-/**index.wxss**/
-.userinfo {
-  display: flex;
+/* pages/index/index.wxss */
+
+
+.indexContainer{
+  height:100%;
+  display:flex;
   flex-direction: column;
   align-items: center;
-  color: #aaa;
+  justify-content: space-around;
+  background-color: pink;
 }
 
-.userinfo-avatar {
-  overflow: hidden;
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
+.indexContainer .avatarUrl{
+  /* 在iphone6下,1px等于2rpx */
+  width:400rpx;
+  height:400rpx;
   border-radius: 50%;
-}
-
-.usermotto {
-  margin-top: 200px;
 }
