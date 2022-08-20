@@ -9,8 +9,8 @@
  -->
 
 <view class="indexContainer">
-  <image class="avatarUrl" src="/static/dazuo.jpeg"></image>
-  <text class="username" bindtap="changeMsg">你好,{{msg}}</text>
+  <image class="avatarUrl" src="{{userInfo.avatarUrl}}"></image>
+  <text class="username" bindtap="changeMsg">你好,{{userInfo.nickName}}</text>
   <!-- <button @click="回调函数" class="welcome">欢迎来到尚硅谷</button> -->
 
   
@@ -21,4 +21,6 @@
   <view bind:tap="handleParent">
     <button capture-catch:tap="handleClick" class="welcome">欢迎来到尚硅谷</button>
   </view>
+
+  <button bindtap="getUserProfile">获取用户授权</button>
 </view>

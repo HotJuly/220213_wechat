@@ -13,21 +13,22 @@ Page({
    *  4.遇到特殊类型凉凉,例如:Set,Map,这些都会变成数组和对象
    */
   data: {
-    msg:"我是初始化数据"
+    msg:"我是初始化数据",
+    userInfo:{}
   },
 
   handleClick(){
     // console.log('handleClick')
 
-    wx.navigateTo({
-      // url: '../log/log',
-      url: '/pages/log/log',
-    })
-
-    // wx.redirectTo({
-    //   url: '../log/log',
-    //   // url: '/pages/log/log',
+    // wx.navigateTo({
+    //   // url: '../log/log',
+    //   url: '/pages/log/log',
     // })
+
+    wx.redirectTo({
+      url: '../log/log',
+      // url: '/pages/log/log',
+    })
   },
 
   handleParent(){
@@ -40,44 +41,65 @@ Page({
     })
   },
 
+  getUserProfile(){
+
+    wx.getUserProfile({
+      desc:"用于测试授权功能",
+      success:(res)=>{
+        // 在各种框架中,框架想要给开发者传递数据,一般就两种渠道
+        // 一种是通过this,另一种就是通过回调函数的形参
+
+        // console.log('res',res)
+
+        this.setData({
+          userInfo:res.userInfo
+        })
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(1,this.data.msg)
-    // this.data.msg="我是修改之后的数据"
-    this.setData({
-      msg:"我是修改之后的数据"
-    })
-    console.log(2,this.data.msg)
+    // console.log(1,this.data.msg)
+    // // this.data.msg="我是修改之后的数据"
+    // this.setData({
+    //   msg:"我是修改之后的数据"
+    // })
+    // console.log(2,this.data.msg)
+
+    // console.log('-------- onLoad ---------')
+
+    
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    console.log('-------- onReady ---------')
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    console.log('-------- onShow ---------')
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    console.log('-------- onHide ---------')
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    console.log('-------- onUnload ---------')
   },
 
   /**
