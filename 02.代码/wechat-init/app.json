@@ -7,5 +7,6 @@
     "navigationBarTitleText": "atguigu",
     "navigationBarTextStyle": "white",
     "navigationStyle": "default"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
