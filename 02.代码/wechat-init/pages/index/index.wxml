@@ -10,7 +10,7 @@
 
 <view class="indexContainer">
   <image class="avatarUrl" src="/static/dazuo.jpeg"></image>
-  <text class="username">你好,{{msg}}</text>
+  <text class="username" bindtap="changeMsg">你好,{{msg}}</text>
   <!-- <button @click="回调函数" class="welcome">欢迎来到尚硅谷</button> -->
 
   

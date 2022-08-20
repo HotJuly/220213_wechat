@@ -17,11 +17,27 @@ Page({
   },
 
   handleClick(){
-    console.log('handleClick')
+    // console.log('handleClick')
+
+    // wx.navigateTo({
+    //   // url: '../log/log',
+    //   url: '/pages/log/log',
+    // })
+
+    wx.redirectTo({
+      url: '../log/log',
+      // url: '/pages/log/log',
+    })
   },
 
   handleParent(){
     console.log('handleParent')
+  },
+
+  changeMsg(){
+    this.setData({
+      msg:"我是点击之后的结果"
+    })
   },
 
   /**
