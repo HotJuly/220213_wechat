@@ -19,15 +19,15 @@ Page({
   handleClick(){
     // console.log('handleClick')
 
-    // wx.navigateTo({
-    //   // url: '../log/log',
-    //   url: '/pages/log/log',
-    // })
-
-    wx.redirectTo({
-      url: '../log/log',
-      // url: '/pages/log/log',
+    wx.navigateTo({
+      // url: '../log/log',
+      url: '/pages/log/log',
     })
+
+    // wx.redirectTo({
+    //   url: '../log/log',
+    //   // url: '/pages/log/log',
+    // })
   },
 
   handleParent(){
