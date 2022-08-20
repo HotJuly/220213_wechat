@@ -4,7 +4,7 @@ Page({
   /**
    * 页面的初始数据
    * 乞丐版深拷贝:JSON
-   *  var data= new Date();
+   *  var data = new Date();
    *  JSON.parse(JSON.stringify(data));
    * 缺点:
    *  1.拷贝得到的结果一定是一个Object对象,会丢失原型链
@@ -21,6 +21,11 @@ Page({
    */
   onLoad: function (options) {
     console.log(1,this.data.msg)
+    // this.data.msg="我是修改之后的数据"
+    this.setData({
+      msg:"我是修改之后的数据"
+    })
+    console.log(2,this.data.msg)
   },
 
   /**
