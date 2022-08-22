@@ -1,0 +1,48 @@
+<view class="indexContainer">
+
+  <swiper 
+  class="bannerSwiper"
+  indicator-color="ivory"
+  indicator-active-color="#d43c33"
+  indicator-dots
+  circular
+  autoplay
+  >
+
+    <swiper-item class="bannerItem">
+      <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+    </swiper-item>
+    <swiper-item class="bannerItem">
+      <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+    </swiper-item>
+    <swiper-item class="bannerItem">
+      <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+    </swiper-item>
+    <swiper-item class="bannerItem">
+      <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+    </swiper-item>
+  </swiper>
+
+  <view class="nav">
+    <view class="navItem">
+      <view class="iconfont icon-meirituijian-"></view>
+      <view class="navTitle">每日推荐</view>
+    </view>
+    <view class="navItem">
+      <view class="iconfont icon-gedan1"></view>
+      <view class="navTitle">歌单</view>
+    </view>
+    <view class="navItem">
+      <view class="iconfont icon-icon-ranking"></view>
+      <view class="navTitle">排行榜</view>
+    </view>
+    <view class="navItem">
+      <view class="iconfont icon-diantai"></view>
+      <view class="navTitle">电台</view>
+    </view>
+    <view class="navItem">
+      <view class="iconfont icon-zhiboguankanliangbofangsheyingshexiangjixianxing"></view>
+      <view class="navTitle">直播</view>
+    </view>
+  </view>
+</view>
