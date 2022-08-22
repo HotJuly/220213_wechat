@@ -29,3 +29,74 @@
   line-height: 100rpx;
   margin:20rpx 0;
 }
+
+/* recommendContainer开始 */
+.recommendContainer{
+  margin:0 20rpx;
+}
+
+.header .title{
+  font-size:28rpx;
+}
+
+.header .moreContent .moreTitle{
+  float:left;
+}
+
+.header .moreContent .more{
+  float:right;
+  font-size:24rpx;
+  border:1rpx solid;
+  padding:10rpx 20rpx;
+  border-radius:15rpx;
+}
+
+.recommendContainer .recommendScroll{
+  display:flex;
+}
+
+.recommendContainer .recommendScroll .recommendItem{
+  margin-right:20rpx;
+}
+
+.recommendContainer .recommendScroll .recommendItem .recommendImg{
+  width:200rpx;
+  height:200rpx;
+  border-radius: 20rpx;
+}
+
+.recommendContainer .recommendScroll .recommendItem .recommendTitle{
+  /*
+    需求:单行文本溢出隐藏,同时显示省略号
+    拆解:
+      1.如何实现单行文本?
+          white-space:nowrap;
+
+      2.如何实现溢出隐藏?
+          width:200rpx;
+          overflow:hidden;
+
+      3.如何显示省略号?
+        text-overflow:ellipsis;
+
+  */
+  /* width:200rpx;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis; */
+
+  height:80rpx;
+  overflow:hidden;
+
+  /* 开启webkit专用盒模型 */
+  display:-webkit-box;
+
+  /* 告知几行之后溢出隐藏 */
+  -webkit-line-clamp:2;
+
+  /* 告知文本的排列方向 */
+  -webkit-box-orient:vertical;
+}
+
+
+/* recommendContainer结束 */

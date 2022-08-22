@@ -1,4 +1,5 @@
 // pages/index/index.js
+import request from '../../utils/request';
 Page({
 
   /**
@@ -7,13 +8,16 @@ Page({
   data: {
 
     // 用于存储首页轮播图相关数据
-    banners:[]
+    banners:[],
+
+    // 用于存储推荐歌曲区域相关数据
+    recommendList:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad:async function (options) {
     /*
       发送请求所需要知道的三个事情
         1.在哪发
@@ -40,21 +44,37 @@ Page({
     */
 
     // console.log('window',window)
-    wx.request({
-      url:"http://localhost:3000/banner",
-      method:"GET",
-      data:{
-        type:2
-      },
-      success:(res)=>{
-        // 此处的res是响应报文对象,其中的data才是响应体数据
-        // console.log('res',res)
-        const banners = res.data.banners;
-        this.setData({
-          // banners:banners,
-          banners
-        })
-      }
+    // wx.request({
+    //   url:"http://localhost:3000/banner",
+    //   method:"GET",
+    //   data:{
+    //     type:2
+    //   },
+    //   success:(res)=>{
+    //     // 此处的res是响应报文对象,其中的data才是响应体数据
+    //     // console.log('res',res)
+    //     const banners = res.data.banners;
+    //     this.setData({
+    //       // banners:banners,
+    //       banners
+    //     })
+    //   }
+    // })
+
+    const result1 = await request("/banner",{
+      type:2
+    });
+
+    const banners = result1.banners;
+    this.setData({
+      // banners:banners,
+      banners
+    })
+
+    const result = await request("/personalized");
+    // console.log('result',result)
+    this.setData({
+      recommendList:result.result
     })
   },
 
