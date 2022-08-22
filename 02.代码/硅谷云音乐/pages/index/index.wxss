@@ -35,24 +35,12 @@
   margin:0 20rpx;
 }
 
-.header .title{
-  font-size:28rpx;
-}
-
-.header .moreContent .moreTitle{
-  float:left;
-}
-
-.header .moreContent .more{
-  float:right;
-  font-size:24rpx;
-  border:1rpx solid;
-  padding:10rpx 20rpx;
-  border-radius:15rpx;
-}
 
 .recommendContainer .recommendScroll{
   display:flex;
+
+  /* scroll-view组件具有BUG,使用flex之后,元素会水平排列,但是计算布局以纵向计算 */
+  height:300rpx;
 }
 
 .recommendContainer .recommendScroll .recommendItem{
