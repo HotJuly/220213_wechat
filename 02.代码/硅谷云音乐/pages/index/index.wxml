@@ -8,22 +8,24 @@
   circular
   autoplay
   >
+  
+  <!-- <view class="navItem" v-for="(item,index) in banners" :key="item.id">
+      <view class="iconfont icon-meirituijian-"></view>
+      <view class="navTitle">每日推荐</view>
+    </view> -->
 
-    <swiper-item class="bannerItem">
-      <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
-    </swiper-item>
-    <swiper-item class="bannerItem">
-      <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
-    </swiper-item>
-    <swiper-item class="bannerItem">
-      <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
-    </swiper-item>
-    <swiper-item class="bannerItem">
-      <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+    <swiper-item 
+    class="bannerItem"
+    wx:for="{{banners}}"
+    wx:for-item="banner"
+    wx:key="id"
+    >
+      <image class="bannerImg" src="{{banner.pic}}"></image>
     </swiper-item>
   </swiper>
 
   <view class="nav">
+
     <view class="navItem">
       <view class="iconfont icon-meirituijian-"></view>
       <view class="navTitle">每日推荐</view>
