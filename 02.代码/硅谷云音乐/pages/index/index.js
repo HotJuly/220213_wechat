@@ -66,22 +66,41 @@ Page({
 
 
     // 用于请求轮播图数据
-    const result1 = await myAxios("/banner",{
-      type:2
-    });
+    // const result1 = await myAxios("/banner",{
+    //   type:2
+    // });
 
-    const banners = result1.banners;
-    this.setData({
-      // banners:banners,
-      banners
+    // const banners = result1.banners;
+    // this.setData({
+    //   // banners:banners,
+    //   banners
+    // })
+
+    // myAxios函数的返回值是promise对象
+    // 如果请求成功了,该promise对象就会变为成功状态,
+    // 同时返回的响应数据会变成该promise的result结果值
+    const promise1 = myAxios("/banner",{
+      type:2
+    })
+
+    // 使用.then方法监视promise1的状态变化
+    // 如果promise1变为成功状态,那么就会执行.then中的第一个回调函数
+    // 同时会将promise1的结果值传递给回调函数,由函数的形参进行接收
+    promise1.then((res)=>{
+      const banners = res.banners;
+      this.setData({
+        // banners:banners,
+        banners
+      })
     })
 
 
     // 用于请求推荐歌曲区域数据
-    const result = await myAxios("/personalized");
-    // console.log('result',result)
-    this.setData({
-      recommendList:result.result
+    myAxios("/personalized")
+    .then((res)=>{
+      this.setData({
+        recommendList:res.result
+      })
     })
 
     // 用于请求排行榜区域数据
@@ -99,29 +118,31 @@ Page({
     // while循环的判断条件,如果为true就执行内部代码,如果是false就跳出循环
     // 循环停止的条件就是keys中所有的榜单都请求结束了
     while(keys.length>index){
-      const result2 = await myAxios("/top/list",{
-        idx:keys[index++]
-      });
 
-      // 用该对象存储所需要的数据,过滤掉无用的数据
-      // slice方法接收两个实参,第一个是开始下标,第二个是结束下标
-      // slice切割数组,开始下标的内容会带上,但是结束下标的内容不会
-      // map方法接受一个回调函数
-      // map返回值是一个全新的数组,内部的数据是根据回调函数的返回值决定的
-      const obj = {
-        id:result2.playlist.id,
-        name:result2.playlist.name,
-        list:result2.playlist.tracks.slice(0,3).map((item)=>{
-          return item.al
-        })
-      };
-  
-      topList.push(obj)
-      // console.log('topList',topList)
-  
-      this.setData({
-        topList
+      myAxios("/top/list",{
+        idx:keys[index++]
       })
+      .then((res)=>{
+        // 用该对象存储所需要的数据,过滤掉无用的数据
+        // slice方法接收两个实参,第一个是开始下标,第二个是结束下标
+        // slice切割数组,开始下标的内容会带上,但是结束下标的内容不会
+        // map方法接受一个回调函数
+        // map返回值是一个全新的数组,内部的数据是根据回调函数的返回值决定的
+        const obj = {
+          id:res.playlist.id,
+          name:res.playlist.name,
+          list:res.playlist.tracks.slice(0,3).map((item)=>{
+            return item.al
+          })
+        };
+    
+        topList.push(obj)
+    
+        this.setData({
+          topList
+        })
+      })
+
     }
   },
 

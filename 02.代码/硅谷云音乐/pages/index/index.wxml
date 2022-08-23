@@ -54,7 +54,7 @@
 
     <scroll-view class="recommendScroll" 	enable-flex scroll-x>
       <view class="recommendItem" wx:for="{{recommendList}}" wx:key="id">
-        <image class="recommendImg" src="{{item.picUrl}}"></image>
+        <image class="recommendImg" src="{{item.picUrl}}" 	lazy-load></image>
         <view class="recommendTitle">{{item.name}}</view>
       </view>
     </scroll-view>
