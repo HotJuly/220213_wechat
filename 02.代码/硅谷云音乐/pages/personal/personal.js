@@ -10,7 +10,10 @@ Page({
     moveDistance:0,
 
     // 用于控制页面上元素的过渡效果
-    moveTransition:""
+    moveTransition:"",
+
+    // 用于存储用户个人信息
+    userInfo:{}
   },
 
   // 用于监视用户手指按下事件
@@ -80,7 +83,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    // 由于personal页面从项目启动到结束,一直都存在,不会卸载
+    // 所以生命周期选择使用onShow,最为稳妥
 
+    const userInfo = wx.getStorageSync("userInfo");
+    this.setData({
+      userInfo
+    })
   },
 
   /**

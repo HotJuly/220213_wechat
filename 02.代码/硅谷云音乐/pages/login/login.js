@@ -194,6 +194,15 @@ Page({
 
     // 策略模式最经典的使用位置就是Vue中的生命周期钩子函数
 
+    const fn = function(){
+
+      wx.showToast({
+        title:"密码错误",
+        icon:"none"
+      });
+      return;
+      
+    }
     const codeFn = {
       200(){
 
@@ -201,6 +210,26 @@ Page({
           title:"登录成功,即将跳转",
           icon:"none"
         });
+
+        // switchTab是专门用于跳转tabBar页面的API
+        // 他会关闭掉其他非tabBar的页面,相当于具有清空页面栈的效果
+        wx.switchTab({
+          url:"/pages/personal/personal"
+        })
+
+        // 将请求得到的用户数据存入到Storage中
+        // 小程序的Storage和html5的localStorage不是同一个东西
+        // 不过他们是相近的东西,但是他们两个的标准不同
+        // 使用选择:
+        //  如果立马就要使用刚存入的Storage就是用同步版本
+        //  如果不打算立即使用,就可以使用异步版本
+        // 注意:同步版本传入两个实参,异步版本传入一个实参
+        // wx.setStorageSync("userInfo",result.profile)
+        wx.setStorage({
+          key:"userInfo",
+          data:result.profile
+        })
+
         return;
 
       },
@@ -222,15 +251,8 @@ Page({
         return;
         
       },
-      502(){
-
-        wx.showToast({
-          title:"密码错误",
-          icon:"none"
-        });
-        return;
-        
-      }
+      502:fn,
+      503:fn
     }
 
 
