@@ -1,5 +1,5 @@
 // pages/index/index.js
-import request from '../../utils/request';
+import myAxios from '../../utils/myAxios';
 Page({
 
   /**
@@ -11,7 +11,10 @@ Page({
     banners:[],
 
     // 用于存储推荐歌曲区域相关数据
-    recommendList:[]
+    recommendList:[],
+
+    // 用于存储排行榜区域相关数据
+    topList:[]
   },
 
   /**
@@ -61,7 +64,9 @@ Page({
     //   }
     // })
 
-    const result1 = await request("/banner",{
+
+    // 用于请求轮播图数据
+    const result1 = await myAxios("/banner",{
       type:2
     });
 
@@ -71,11 +76,53 @@ Page({
       banners
     })
 
-    const result = await request("/personalized");
+
+    // 用于请求推荐歌曲区域数据
+    const result = await myAxios("/personalized");
     // console.log('result',result)
     this.setData({
       recommendList:result.result
     })
+
+    // 用于请求排行榜区域数据
+
+    // 用于声明需要展示的榜单key值
+    const keys = [1,4,8,22,33];
+
+    // 用于存储所有榜单的数据
+    const topList = [];
+
+    // 用于记录当前请求的次数
+    let index = 0;
+
+    // 开始请求榜单数据
+    // while循环的判断条件,如果为true就执行内部代码,如果是false就跳出循环
+    // 循环停止的条件就是keys中所有的榜单都请求结束了
+    while(keys.length>index){
+      const result2 = await myAxios("/top/list",{
+        idx:keys[index++]
+      });
+
+      // 用该对象存储所需要的数据,过滤掉无用的数据
+      // slice方法接收两个实参,第一个是开始下标,第二个是结束下标
+      // slice切割数组,开始下标的内容会带上,但是结束下标的内容不会
+      // map方法接受一个回调函数
+      // map返回值是一个全新的数组,内部的数据是根据回调函数的返回值决定的
+      const obj = {
+        id:result2.playlist.id,
+        name:result2.playlist.name,
+        list:result2.playlist.tracks.slice(0,3).map((item)=>{
+          return item.al
+        })
+      };
+  
+      topList.push(obj)
+      // console.log('topList',topList)
+  
+      this.setData({
+        topList
+      })
+    }
   },
 
   /**
