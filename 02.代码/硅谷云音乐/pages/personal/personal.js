@@ -53,6 +53,15 @@ Page({
     })
   },
 
+  // 用于监视用户点击用户信息区域,跳转login页面
+  toLogin(){
+    // 由于用户进入登录界面,如果不登录还可以返回个人中心
+    // 所以选择使用wx.navigateTo跳转
+    wx.navigateTo({
+      url: '/pages/login/login',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

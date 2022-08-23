@@ -3,7 +3,12 @@
     <image class="bg" src="/static/images/personal/bgImg2.jpg"></image>
 
 
-    <view class="user-info-box">
+    <!-- tap和touchstart在大多数场景下都是相同效果,
+    但是如果需要区分长按和短触这两个操作,使用touchstart无法区分 -->
+    <view 
+    class="user-info-box"
+    bindtap="toLogin"
+    >
       <view class="portrait-box">
         <image class="portrait" src="/static/images/personal/missing-face.png"></image>
       </view>
