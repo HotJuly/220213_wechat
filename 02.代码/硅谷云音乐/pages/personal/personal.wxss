@@ -195,3 +195,30 @@
   float: right;
 }
 
+/* 
+  最近播放记录样式开始
+*/
+
+/* flex会压缩直系子元素,但是压缩具有最大值
+  被压缩的子元素不能小于他自己的内部元素的大小
+*/
+.playScroll{
+  display:flex;
+  flex-wrap: nowrap;
+  height:150rpx;
+}
+
+/* .playScroll .playItem{
+  width:150rpx;
+  height:150rpx;
+  flex-shrink: 0;
+} */
+
+.playScroll .playItem image{
+  width:150rpx;
+  height:150rpx;
+}
+
+/* 
+  最近播放记录样式结束
+*/

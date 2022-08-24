@@ -62,7 +62,32 @@
     </view>
 
     <view class="playContent">
-        <view class="noData">暂时没有数据</view>
+        <!-- <view class="noData">暂时没有数据</view> -->
+        <!-- <scroll-view 
+        enable-flex 
+        scroll-x
+        class="playScroll">
+          <image class="playItem" src="/static/images/dazuo.jpeg"></image>
+          <image class="playItem" src="/static/images/dazuo.jpeg"></image>
+          <image class="playItem" src="/static/images/dazuo.jpeg"></image>
+          <image class="playItem" src="/static/images/dazuo.jpeg"></image>
+          <image class="playItem" src="/static/images/dazuo.jpeg"></image>
+          <image class="playItem" src="/static/images/dazuo.jpeg"></image>
+          <image class="playItem" src="/static/images/dazuo.jpeg"></image>
+          <image class="playItem" src="/static/images/dazuo.jpeg"></image>
+        </scroll-view> -->
+        <scroll-view 
+        enable-flex 
+        scroll-x
+        class="playScroll">
+          <view 
+          class="playItem" 
+          wx:for="{{playList}}"
+          wx:key="id"
+          >
+            <image src="{{item.picUrl}}"></image>
+          </view>
+        </scroll-view>
       </view>
 
     <view class="cardList">

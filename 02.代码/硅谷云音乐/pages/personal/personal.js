@@ -1,4 +1,6 @@
 // pages/personal/personal.js
+// 小程序中引入文件不要使用绝对路径,会出问题,路径不对
+import myAxios from '../../utils/myAxios';
 Page({
 
   /**
@@ -13,7 +15,10 @@ Page({
     moveTransition:"",
 
     // 用于存储用户个人信息
-    userInfo:{}
+    userInfo:{},
+
+    // 用于存储最近播放记录列表数据
+    playList:[]
   },
 
   // 用于监视用户手指按下事件
@@ -82,7 +87,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow:async function () {
     // 由于personal页面从项目启动到结束,一直都存在,不会卸载
     // 所以生命周期选择使用onShow,最为稳妥
 
@@ -90,6 +95,22 @@ Page({
     this.setData({
       userInfo
     })
+
+    if(userInfo.userId){
+      // 请求最近播放记录必须要有用户的userId才行
+      const result = await myAxios('/user/record',{
+        uid:userInfo.userId,
+        type:1
+      })
+
+      const playList = result.weekData.map((item)=>{
+        return item.song.al
+      })
+      // console.log('result',result)
+      this.setData({
+        playList
+      })
+    }
   },
 
   /**
