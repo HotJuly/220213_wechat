@@ -1,5 +1,6 @@
 // pages/video/video.js
 // import myAxios from '../../utils/myAxios';
+import hasPermission from '../../utils/hasPermission';
 Page({
 
   /**
@@ -53,6 +54,20 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow:async function () {
+    /*
+      需求:如果用户没有登录,就不发送请求
+      拆解:
+        1.怎么知道用户是否登录了?
+          通过Storage中的cookie属性可以得知
+
+        2.不发送请求
+          就是不执行发送请求的代码
+    */
+   
+    // 根据函数的返回值可以判断是否已经登录
+    // const flag = hasPermission();
+    // if(!flag)return;
+
     // tabBar页面除非使用某些特殊手段,否则正常情况下会一直存在
     // 最多是隐藏页面,不会销毁,所以选择使用onShow生命周期最稳妥
 
