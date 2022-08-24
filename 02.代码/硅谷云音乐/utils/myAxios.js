@@ -14,6 +14,9 @@ export default function(url,data={},method="GET"){
       url:"http://localhost:3000" + url,
       method,
       data,
+      header:{
+        cookie:wx.getStorageSync("cookie")
+      },
       success:(res)=>{
         // console.log('res',res)
         // const recommendList = res.data.result;

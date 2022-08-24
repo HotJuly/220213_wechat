@@ -10,7 +10,10 @@ Page({
     navList:[],
 
     // 用于记录用户点击选中的导航选项
-    currentId:null
+    currentId:null,
+
+    // 用于存储视频列表区域数据
+    videoList:[]
   },
   // $myAxios:myAxios,
 
@@ -62,6 +65,18 @@ Page({
       // currentId:this.data.navList[0].id 错误写法
       currentId:data[0].id
     })
+
+    const result = await this.$myAxios("/video/group",{
+      id:this.data.currentId
+    })
+
+    this.setData({
+      videoList:result.datas.map((item)=>{
+        return item.data;
+      })
+    })
+
+    // console.log('result',result)
   },
 
   /**

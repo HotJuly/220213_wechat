@@ -1,0 +1,52 @@
+问题:小程序不支持cookie相关功能
+
+需求:
+	1.自动存储服务器返回的cookie数据
+	2.自动发送cookie数据给服务器
+
+需求1:自动存储服务器返回的cookie数据
+拆解:
+	1.什么叫做自动?
+		在写代码中没有什么事情是自动的
+		所谓的自动,就是开发人员通过js代码,在后台悄悄完成的情况
+
+		所谓的手动,就是用户通过页面上的组件标签,点击实现部分功能
+
+	2.数据存储在哪里?
+		由于cookie相关的数据,未来再次打开项目还要使用
+		所以最终选择存储于Storage中,防止丢失
+
+	3.如何获取到cookie数据?
+		通过响应头中可以获取到
+		
+		查找cookie的接口:https://music.163.com/weapi/login/cellphone
+		需要保存的cookie数据是:以MUSIC_U开头的cookie
+			"MUSIC_U=f9cd6ac08eab37cd4115366822656820c29bb3340d73fa4a0659383167352d5f2db2b902059571886b6b7bba7e18e450cac2956c8cc5c91988d7a9980d9f344dfa3fd9b678600d111b93ac14e0ed86ab; Max-Age=1296000; Expires=Thu, 08 Sep 2022 07:38:40 GMT; Path=/; Domain=.music.163.com; HTTPOnly"
+
+
+需求2:自动发送cookie数据给服务器
+拆解:
+	1.什么叫做自动?
+		自动的意思就是通过js实现某些功能,不需要用户对页面进行交互操作
+	
+	2.如何将cookie发送给服务器?
+		在所有的请求头中,添加cookie属性
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
