@@ -18,6 +18,25 @@ Page({
   },
   // $myAxios:myAxios,
 
+  // 该函数用于请求对应分组的视频列表数据
+  async getVideoList(){
+
+    this.setData({
+      videoList:[]
+    })
+
+    const result = await this.$myAxios("/video/group",{
+      id:this.data.currentId
+    })
+
+    this.setData({
+      videoList:result.datas.map((item)=>{
+        return item.data;
+      })
+    })
+
+  },
+
   // 该函数仅用于测试练习视频相关API,不属于当前项目功能
   testApi(){
     const videoContext = wx.createVideoContext('DAEC00324DE081DC072B09BD90AAAE4D');
@@ -46,8 +65,8 @@ Page({
   },
 
   // 用于监视用户点击导航区域选项操作
-  changeCurrentId(event){
-    console.log('changeCurrentId',event)
+  async changeCurrentId(event){
+    // console.log('changeCurrentId',event)
     // 获取到当前被点击标签的自定义属性data-id,从中可以知道用户选择的是哪个选项
 
     // event.target是找最内层的触发者
@@ -61,6 +80,14 @@ Page({
     this.setData({
       currentId:id
     })
+
+    wx.showLoading({
+      title:"加载中,请稍等"
+    });
+
+    await this.getVideoList();
+
+    wx.hideLoading();
   },
 
   /**
@@ -109,15 +136,7 @@ Page({
       currentId:data[0].id
     })
 
-    const result = await this.$myAxios("/video/group",{
-      id:this.data.currentId
-    })
-
-    this.setData({
-      videoList:result.datas.map((item)=>{
-        return item.data;
-      })
-    })
+    this.getVideoList();
 
     // console.log('result',result)
   },
