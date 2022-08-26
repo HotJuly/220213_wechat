@@ -26,7 +26,7 @@
 
   <view class="nav">
 
-    <view class="navItem">
+    <view class="navItem" bindtap="toRecommendSong">
       <view class="iconfont icon-meirituijian-"></view>
       <view class="navTitle">每日推荐</view>
     </view>
