@@ -14,9 +14,22 @@ Page({
     currentId:null,
 
     // 用于存储视频列表区域数据
-    videoList:[]
+    videoList:[],
+
+    // 用于控制视频列表区域下拉动画的开关状态
+    isTrigger:false
   },
   // $myAxios:myAxios,
+
+  // 用于监视用户下拉scroll-view区域,实现下拉刷新功能
+  async handlePullDown(){
+    // console.log('handlePullDown')
+    await this.getVideoList();
+
+    this.setData({
+      isTrigger:false
+    })
+  },
 
   // 该函数用于请求对应分组的视频列表数据
   async getVideoList(){
@@ -159,7 +172,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    console.log('onPullDownRefresh')
   },
 
   /**

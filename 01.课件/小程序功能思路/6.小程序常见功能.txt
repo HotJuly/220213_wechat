@@ -1,0 +1,33 @@
+小程序下拉刷新
+	实现渠道有两种
+		1.下拉页面
+			意思:刷新当前整个页面所有的内容
+			流程:
+				1.开启页面的下拉动画(否则下拉事件无法触发)
+					所有页面都开启动画: app.json->window对象->enablePullDownRefresh:true
+					部分页面开启动画: video.json->enablePullDownRefresh:true
+				2.监视用户下拉操作
+					通过Page的配置对象中的onPullDownRefresh来监视页面的下拉操作
+
+		2.下拉scroll-view
+			意思:刷新当前scroll-view区域中展示的数据内容
+			流程:
+				1.开启scroll-view区域的下拉动画(否则下拉事件无法触发)
+					给scroll-view组件添加标签属性	refresher-enabled
+
+				2.监视用户下拉操作
+					给scroll-view组件绑定事件refresherrefresh,来监视下拉操作
+
+			遇到BUG:下拉刷新已经结束了,但是下拉动画没有收回
+			解决方案:
+				1.给scroll-view组件添加标签属性refresher-triggered
+				2.使用状态数据对该标签属性进行控制
+				3.当刷新成功之后,通过状态数据将下拉动画关闭即可
+
+需求:当用户下拉页面时,刷新当前video列表数据
+拆解:
+	1.当用户下拉页面时
+		绑定事件监听
+
+	2.刷新当前video列表数据
+		其实就是将当前列表数据重新请求一次
