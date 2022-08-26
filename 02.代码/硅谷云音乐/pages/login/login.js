@@ -240,6 +240,7 @@ Page({
         })
 
         // 将网易真实接口中的cookie复制过来进行保存,实现身份登录的证明
+        // 只有登录接口才有该cookie
         wx.setStorageSync("cookie","MUSIC_U=f9cd6ac08eab37cd4115366822656820c29bb3340d73fa4a0659383167352d5f2db2b902059571886b6b7bba7e18e450cac2956c8cc5c91988d7a9980d9f344dfa3fd9b678600d111b93ac14e0ed86ab; Max-Age=1296000; Expires=Thu, 08 Sep 2022 07:38:40 GMT; Path=/; Domain=.music.163.com; HTTPOnly");
 
         return;

@@ -18,6 +18,33 @@ Page({
   },
   // $myAxios:myAxios,
 
+  // 该函数仅用于测试练习视频相关API,不属于当前项目功能
+  testApi(){
+    const videoContext = wx.createVideoContext('DAEC00324DE081DC072B09BD90AAAE4D');
+    videoContext.pause();
+  },
+
+  // 用于监视用户播放视频操作
+  handlePlay(event){
+    // console.log('handlePlay',event)
+    // console.log(this.oldVid)
+
+    // 1.获取当前正在播放视频id
+    const vid = event.currentTarget.id;
+
+    // 3.使用API暂停上一个视频的播放
+    // 判断条件:
+    //  1.必须要有上一次播放的记录
+    //  2.上一次播放的视频不能和当前正要播放的视频是同一个
+    if(this.oldVid&&this.oldVid!==vid){
+      const videoContent = wx.createVideoContext(this.oldVid)
+      videoContent.pause();
+    }
+
+    // 2.将当前视频的id存储起来,留给下一次使用
+    this.oldVid = vid;
+  },
+
   // 用于监视用户点击导航区域选项操作
   changeCurrentId(event){
     console.log('changeCurrentId',event)
@@ -54,6 +81,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow:async function () {
+    console.log('this',this)
     /*
       需求:如果用户没有登录,就不发送请求
       拆解:
