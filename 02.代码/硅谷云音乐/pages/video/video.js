@@ -17,9 +17,31 @@ Page({
     videoList:[],
 
     // 用于控制视频列表区域下拉动画的开关状态
-    isTrigger:false
+    isTrigger:false,
+
+    // 用于控制image组件和video组件之间的显示切换
+    videoId:null
   },
   // $myAxios:myAxios,
+
+  // 用于监视用户点击了哪张图片,并实现video组件切换以及播放功能
+  playVideo(event){
+    // console.log('playVideo')
+    // 1.获取到image组件的id,因为image组件的id和video组件的id相同
+    const id = event.currentTarget.id;
+
+    // 2.将获取到的id更新到data中,让对应的video组件显示出来
+    // setData可以接收两个实参,第二个实参是回调函数,该回调函数会在视图更新之后才执行
+    this.setData({
+      videoId:id
+    },()=>{
+      // 3.获取到对应video组件的上下文对象,并实现播放功能
+      // 扩展:也可以使用给video组件添加autoplay属性进行替代
+      // 注意:数据是同步更新,但是视图是异步更新,所以我们要保证视图已经更新之后,才执行以下代码
+      const videoContext = wx.createVideoContext(id);
+      videoContext.play();
+    })
+  },
 
   // 用于监视用户下拉scroll-view区域,实现下拉刷新功能
   async handlePullDown(){
@@ -121,7 +143,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow:async function () {
-    console.log('this',this)
+    // console.log('this',this)
     /*
       需求:如果用户没有登录,就不发送请求
       拆解:
@@ -185,7 +207,34 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function (event) {
+    // 我们需要提供一个回调函数给当前页面
+    // 如果用户触发了转发操作,就会执行回调函数,并且小程序还会对回调函数进行传参
 
+    console.log('onShareAppMessage',event)
+
+    const {from} = event;
+    if(from==="menu"){
+      // 能进入这里就说明用户点击了右上角的转发按钮
+      // 如果点击的是menu,那么应该转发的是小程序的标题和logo
+
+        return {
+          title:"硅谷云音乐",
+          imageUrl:"/static/images/dazuo.jpeg",
+          path:"/pages/index/index"
+        }
+    }else{
+      // 能进入这里就说明用户点击了页面上的button组件
+      // 如果点击的是button,那么应该转发的是当前文章的标题和宣传图
+
+      const { title , imageurl } = event.target.dataset;
+      return {
+        title,
+        imageUrl:imageurl,
+        // imageUrl, 错误写法
+        path:"/pages/video/video"
+      }
+      
+    }
   }
 })
