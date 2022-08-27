@@ -67,18 +67,34 @@ Page({
     })
     // console.log('result',result)
 
-    PubSub.subscribe("switchType",(msg,type)=>{
+    this.token = PubSub.subscribe("switchType",(msg,type)=>{
       // console.log('switchType',msg,type)
+      // 流程2:根据用户的操作标识,找到对应的歌曲信息
 
       let {currentIndex,recommendList} = this.data;
 
       if(type==="next"){
-        currentIndex++;
+        if(currentIndex === recommendList.length-1){
+          currentIndex=0;
+        }else{
+          currentIndex++;
+        }
+      }else{
+        if(currentIndex === 0){
+          currentIndex = recommendList.length-1;
+        }else{
+          currentIndex--;
+        }
       }
 
       // 根据下标找到对应歌曲的信息
       const song = recommendList[currentIndex];
 
+      this.setData({
+        currentIndex
+      })
+
+      // 流程3:将找到的对应歌曲id,发送给song页面
       PubSub.publish('sendId',song.id);
     })
   },
@@ -108,7 +124,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    PubSub.unsubscribe(this.token);
   },
 
   /**
