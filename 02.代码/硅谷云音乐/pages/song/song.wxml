@@ -8,6 +8,19 @@
   </view>
 
 
+  <!-- 进度条区域 -->
+  <view class="barContainer">
+    <text class="currentTime">{{currentTime}}</text>
+    <view class="wrap">
+      <view class="inner" style="width:{{currentWidth}}%">
+        <view class="point"></view>
+      </view>
+      <view id="mask" bindtouchstart="handleTouchStart" bindtouchmove="handleTouchMove" bindtouchend="handleTouchEnd"></view>
+    </view>
+    <text class="durationTime">{{durationTime}}</text>
+  </view>
+
+
   <!-- 音乐控制器 -->
   <view class="musicControl">
     <text class="iconfont icon-iconsMusicyemianbofangmoshiShuffle" ></text>

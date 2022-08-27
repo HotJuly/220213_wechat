@@ -1,5 +1,6 @@
 // app.js
 import myAxios from './utils/myAxios';
+import moment from 'moment';
 import hasPermission from './utils/hasPermission';
 import utilConfig from './utils/config';
 App({
@@ -9,6 +10,8 @@ App({
     Page = function(config){
 
       config.$myAxios = myAxios;
+
+      config.$moment= moment;
 
       const showFn = config.onShow;
 

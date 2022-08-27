@@ -21,8 +21,80 @@ Page({
     // 用于存储当前页面的歌曲id
     songId:null,
 
+    // 用于存储歌曲的当前时间
+    currentTime:"00:00",
+
+    // 用于存储歌曲的总时长
+    durationTime:"--:--",
+
+    // 用于存储控制进度条长度
+    currentWidth:0,
+
     // 用于控制页面C3效果的状态
     isPlay:false
+  },
+
+  // 用于监视用户在进度条区域按下事件
+  handleTouchStart(){
+    this.flag=true;
+  },
+
+  // 用于监视用户在进度条区域的滑动效果
+  handleTouchMove(event){
+
+    if(this.flag1)return;
+
+    this.flag1=true;
+    // console.log('handleTouchMove',event)
+    const clientX = event.touches[0].clientX;
+    // 当前变量的值是手指距离进度条最左侧的位置
+    const left = clientX - this.offsetLeft;
+
+    // console.log('left',left)
+
+    // 获取当前手指位置的歌曲百分比信息
+    const currentWidth = left / this.width * 100;
+
+    if(currentWidth>100||currentWidth<0)return;
+    this.setData({
+      currentWidth
+    })
+
+    setTimeout(()=>{
+      this.flag1=false;
+    },20);
+  },
+
+  // 用于监视用户拖拽完进度条,手指抬起时间,需要跳转歌曲进度
+  handleTouchEnd(){
+    // console.log('handleTouchEnd')
+    this.flag = false;
+    const startTime = this.data.currentWidth/100000 * this.data.musicInfo.dt
+
+    // this.backgroundAudioManager.startTime = startTime;
+
+    this.backgroundAudioManager.seek(startTime)
+
+    // console.log('startTime',startTime)
+  },
+
+  // 专门用于绑定背景音频相关事件
+  addEvent(){
+
+    // 监视背景音频进度更新事件
+    this.backgroundAudioManager.onTimeUpdate(()=>{
+      // console.log('onTimeUpdate')
+
+      if(this.flag)return;
+      // 获取当前歌曲的当前进度,单位为s
+      // 获取当前歌曲的总时长,单位为s
+      const {currentTime,duration} = this.backgroundAudioManager;
+
+      this.setData({
+        currentTime:this.$moment(currentTime*1000).format('mm:ss'),
+        currentWidth:currentTime/duration*100
+      })
+    })
   },
 
   // 用于监视用户点击下一首按钮
@@ -38,7 +110,8 @@ Page({
     const result = await this.$myAxios('/song/detail',{ids:this.data.songId});
 
     this.setData({
-      musicInfo:result.songs[0]
+      musicInfo:result.songs[0],
+      durationTime:this.$moment(result.songs[0].dt).format('mm:ss')
     })
 
     wx.setNavigationBarTitle({
@@ -59,12 +132,12 @@ Page({
   // 用于监视用户点击播放按钮操作
   async handlePlay(){
     // 1.获取背景音频管理器对象
-    const backgroundAudioManager = wx.getBackgroundAudioManager();
+    // const backgroundAudioManager = wx.getBackgroundAudioManager();
 
     // 根据页面播放状态,执行不同效果
     if(this.data.isPlay){
       // 能进入这里说明页面处于播放状态,需要暂停歌曲
-      backgroundAudioManager.pause();
+      this.backgroundAudioManager.pause();
 
       // 缓存当前歌曲的播放状态
       appInstance.globalData.playState = false;
@@ -74,8 +147,8 @@ Page({
       }
 
       // 2.添加src,title属性,实现自动播放
-      backgroundAudioManager.src=this.data.musicUrl;
-      backgroundAudioManager.title=this.data.musicInfo.name;
+      this.backgroundAudioManager.src=this.data.musicUrl;
+      this.backgroundAudioManager.title=this.data.musicInfo.name;
 
       // 缓存当前播放的歌曲id
       appInstance.globalData.audioId = this.data.songId;
@@ -124,6 +197,11 @@ Page({
         isPlay:true
       })
     }
+    
+    // 在页面加载的时候,查找一次背景音频管理器对象,之后都可以直接从this身上读取
+    this.backgroundAudioManager = wx.getBackgroundAudioManager();
+
+    this.addEvent();
 
     // 准备工作3:用于接收每日推荐页面返回的歌曲id
     this.token = PubSub.subscribe("sendId",(msg,id)=>{
@@ -141,10 +219,10 @@ Page({
       Promise.all([promise1,promise2])
       .then(()=>{
         // 如果前两个请求都成功才执行以下代码,播放歌曲
-        const backgroundAudioManager = wx.getBackgroundAudioManager();
+        // const backgroundAudioManager = wx.getBackgroundAudioManager();
   
-        backgroundAudioManager.src=this.data.musicUrl;
-        backgroundAudioManager.title=this.data.musicInfo.name;
+        this.backgroundAudioManager.src=this.data.musicUrl;
+        this.backgroundAudioManager.title=this.data.musicInfo.name;
         
         // 缓存当前播放的歌曲id
         appInstance.globalData.audioId = this.data.songId;
@@ -165,6 +243,20 @@ Page({
       })
 
     })
+
+    // 1.生成节点查找器
+    const selectorQuery = wx.createSelectorQuery();
+
+    // 2.找到需要的节点对象
+    selectorQuery.select("#mask").boundingClientRect((data)=>{
+      // console.log('boundingClientRect',data)
+
+      // 存储当前mask元素的实际宽度
+      this.width = data.width;
+
+      // 存储mask元素距离屏幕最左边的距离
+      this.offsetLeft = data.left;
+    }).exec();
   },
 
   /**
