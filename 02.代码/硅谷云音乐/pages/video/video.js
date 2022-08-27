@@ -29,6 +29,11 @@ Page({
     // console.log('playVideo')
     // 1.获取到image组件的id,因为image组件的id和video组件的id相同
     const id = event.currentTarget.id;
+    
+    // if(this.data.videoId){
+    //   const videoContext = wx.createVideoContext(this.data.videoId);
+    //   videoContext.stop();
+    // }
 
     // 2.将获取到的id更新到data中,让对应的video组件显示出来
     // setData可以接收两个实参,第二个实参是回调函数,该回调函数会在视图更新之后才执行

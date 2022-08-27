@@ -39,8 +39,8 @@
       <video 
       wx:if="{{item.vid === videoId}}"
       id="{{item.vid}}"
-      class="common" 
       autoplay
+      class="common" 
       src="{{item.urlInfo.url}}"
       bindplay="handlePlay"
       ></video>
