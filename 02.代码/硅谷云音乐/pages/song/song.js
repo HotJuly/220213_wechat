@@ -1,4 +1,6 @@
 // pages/song/song.js
+import PubSub from 'pubsub-js';
+console.log('PubSub',PubSub);
 const appInstance = getApp();
 Page({
 
@@ -21,6 +23,14 @@ Page({
 
     // 用于控制页面C3效果的状态
     isPlay:false
+  },
+
+  // 用于监视用户点击下一首按钮
+  switchType(){
+    PubSub.subscribe("sendId",(msg,id)=>{
+      console.log('id',id);
+    })
+    PubSub.publish('switchType','next');
   },
 
   // 用于监视用户点击播放按钮操作

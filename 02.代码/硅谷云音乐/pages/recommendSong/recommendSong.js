@@ -1,4 +1,5 @@
 // pages/recommendSong/recommendSong.js
+import PubSub from 'pubsub-js';
 Page({
 
   /**
@@ -13,7 +14,10 @@ Page({
       day:"--",
 
       // 用于存储每日推荐列表数据
-      recommendList:[]
+      recommendList:[],
+
+      // 用于存储当前用户点击的歌曲下标
+      currentIndex:null
   },
 
   // 用于监视用户点击歌曲卡片,实现跳转到song页面功能
@@ -27,6 +31,11 @@ Page({
     // 注意:url具有长度限制,不能传递太大的数据
 
     const song = event.currentTarget.dataset.song
+    const currentIndex = event.currentTarget.dataset.index;
+
+    this.setData({
+      currentIndex
+    })
 
     wx.navigateTo({
       // 不能传对象,数据量太大了
@@ -57,6 +66,21 @@ Page({
       recommendList:result.recommend
     })
     // console.log('result',result)
+
+    PubSub.subscribe("switchType",(msg,type)=>{
+      // console.log('switchType',msg,type)
+
+      let {currentIndex,recommendList} = this.data;
+
+      if(type==="next"){
+        currentIndex++;
+      }
+
+      // 根据下标找到对应歌曲的信息
+      const song = recommendList[currentIndex];
+
+      PubSub.publish('sendId',song.id);
+    })
   },
 
   /**
