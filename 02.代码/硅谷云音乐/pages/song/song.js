@@ -1,4 +1,5 @@
 // pages/song/song.js
+const appInstance = getApp();
 Page({
 
   /**
@@ -15,6 +16,9 @@ Page({
     // 用于存储当前页面歌曲的音频链接
     musicUrl:"",
 
+    // 用于存储当前页面的歌曲id
+    songId:null,
+
     // 用于控制页面C3效果的状态
     isPlay:false
   },
@@ -28,10 +32,20 @@ Page({
     if(this.data.isPlay){
       // 能进入这里说明页面处于播放状态,需要暂停歌曲
       backgroundAudioManager.pause();
+
+      // 缓存当前歌曲的播放状态
+      appInstance.globalData.playState = false;
     }else{
       // 2.添加src,title属性,实现自动播放
       backgroundAudioManager.src=this.data.musicUrl;
       backgroundAudioManager.title=this.data.musicInfo.name;
+
+      // 缓存当前播放的歌曲id
+      appInstance.globalData.audioId = this.data.songId;
+
+      // 缓存当前歌曲的播放状态
+      appInstance.globalData.playState = true;
+
     }
 
     this.setData({
@@ -56,7 +70,8 @@ Page({
     // console.log('result',result)
 
     this.setData({
-      musicInfo:result.songs[0]
+      musicInfo:result.songs[0],
+      songId
     })
 
     wx.setNavigationBarTitle({
@@ -71,6 +86,19 @@ Page({
     this.setData({
       musicUrl:result1.data[0].url
     })
+
+    // 用于练习,测试app实例对象操作方法
+    // console.log('appInstance1',appInstance.globalData.msg)
+    // appInstance.globalData.msg = "我是全局修改之后的数据";
+    // console.log('appInstance2',appInstance.globalData.msg)
+
+    // 如果当前页面显示的歌曲和正在播放的背景音频是同一首歌
+    // const { audioId, playState} = appInstance.globalData;
+    // if(playState&&audioId === songId){
+    //   this.setData({
+    //     isPlay:true
+    //   })
+    // }
   },
 
   /**
