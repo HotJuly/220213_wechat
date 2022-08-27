@@ -40,7 +40,7 @@ Page({
     wx.navigateTo({
       // 不能传对象,数据量太大了
       // url:`/pages/song/song?song=${JSON.stringify(song)}`
-      url:`/pages/song/song?songId=${song.id}`
+      url:`/songs/pages/song/song?songId=${song.id}`
     })
   },
 
